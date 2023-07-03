@@ -41,4 +41,4 @@ def save_all_frames(video_path, dir_path, basename, ext='jpg', output_interval=3
 
     cap.release()
 
-save_all_frames('input/in.mp4', 'output/'+ nt, 'img', output_interval=3)
+#save_all_frames('input/in.mp4', 'output/'+ nt, 'img', output_interval=3)
