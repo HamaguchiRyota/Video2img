@@ -15,7 +15,6 @@ def dirdialog_clicked():
     iDir = os.path.abspath(os.path.dirname(__file__))
     iDirPath = filedialog.askdirectory(initialdir = iDir)
     entry2.set(iDirPath)
-    entry3.set(iDirPath)
 
 # ファイル指定の関数
 def filedialog_clicked():
@@ -24,18 +23,25 @@ def filedialog_clicked():
     iFilePath = filedialog.askopenfilename(filetype = fTyp, initialdir = iFile)
     entry1.set(iFilePath)
 
+def output(text):
+    # TODO: ここで、UI に出力。
+    # 注意: print() した内容がこの関数に渡されるので、この関数内でprint()は使えない。
+    ... 
+    sys.stderr.write = output
+    sys.stdout.write = output    
+
 # 実行ボタン押下時の実行関数
 def conductMain():
     filePath = entry1.get()
     dirPath = entry2.get() 
-    removePath = entry3.get()
 
     if not filePath or not dirPath:
         messagebox.showinfo("エラー","必要な動画ファイル又は出力パスが未指定です。")
     else:
         #intervalはフレームレートに対して1秒間に何枚出力するか
-        save_all_frames(filePath, dirPath + nt, 'img', output_interval=3)
-        remove_duplicate_images(removePath)
+        spath = dirPath + '/' + nt
+        save_all_frames(filePath, spath, 'img', output_interval=3)
+        remove_duplicate_images(spath)
 
 if __name__ == "__main__":
 
@@ -80,25 +86,6 @@ if __name__ == "__main__":
 
     # 「フォルダ参照」ボタンの作成
     IDirButton = ttk.Button(frame2, text="参照", command=dirdialog_clicked,)
-    IDirButton.pack(side=LEFT)
-
-    '''==================================================================== '''
-    
-    # Frame3の作成
-    frame3 = ttk.Frame(root, padding=10)
-    frame3.grid(row=4, column=1, sticky=E)
-
-    # 「フォルダ参照」ラベルの作成
-    IDirLabel = ttk.Label(frame3, text="削除の実行先:", padding=(5, 2))
-    IDirLabel.pack(side=LEFT)
-
-    # 「フォルダ参照」エントリーの作成
-    entry3 = StringVar()
-    IDirEntry = ttk.Entry(frame3, textvariable=entry3, width=45)
-    IDirEntry.pack(side=LEFT)
-
-    # 「フォルダ参照」ボタンの作成
-    IDirButton = ttk.Button(frame3, text="参照", command=dirdialog_clicked,)
     IDirButton.pack(side=LEFT)
 
     '''==================================================================== '''
